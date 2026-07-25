@@ -33,6 +33,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   than a detail.
 - `WTV` added to the fictional-inventions list in the page footer.
 
+## [2.4.1] - 2026-07-25
+
+### Fixed
+
+- **Canonical redirects moved into `netlify.toml`.** Netlify's primary-domain
+  setting did not produce them: all four names kept serving 200 as equals,
+  with no `Location` header and no certificate re-issue. `www` and
+  `history.vogeltronics.com` now 301 to the bare domain from committed rules,
+  which survive dashboard edits and work on any plan. `force = true` is
+  required, or the rule yields to the existing `index.html` at `/`.
+
 ## [2.4.0] - 2026-07-25
 
 ### Changed

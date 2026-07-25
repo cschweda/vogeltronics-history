@@ -1,3 +1,31 @@
-# history.vogeltronics.com — static single-file site, no build step
+# vogeltronics.com — static single-file site, no build step
 [build]
   publish = "."
+
+# Canonicalise on the bare domain.
+#
+# Netlify's "primary domain" setting was supposed to do this and did not: all
+# four names went on serving 200 as equals, with no Location header and no
+# certificate re-issue. Putting the rules here instead means they are version
+# controlled, survive dashboard edits, and work on any plan.
+#
+# `force = true` is required — without it a redirect yields to an existing
+# file, and since this site serves index.html at "/" the rule would never fire.
+# The scheme is included so the match is on host, not path.
+
+[[redirects]]
+  from = "https://www.vogeltronics.com/*"
+  to = "https://vogeltronics.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://history.vogeltronics.com/*"
+  to = "https://vogeltronics.com/:splat"
+  status = 301
+  force = true
+
+# Deliberately no rule for vogeltronics.metaincognita.com. That address is
+# retired, not moved; a redirect would keep it alive. It is removed from the
+# site's domains in the Netlify dashboard instead, which is what drops it from
+# the certificate.
