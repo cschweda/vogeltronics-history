@@ -4,7 +4,7 @@
 
 # VogelTronics — The Whole Story
 
-**Live site:** [vogeltronics.metaincognita.com](https://vogeltronics.metaincognita.com)
+**Live site:** [history.vogeltronics.com](https://history.vogeltronics.com)
 
 A single-page, magazine-style corporate history of **VogelTronics** ("Games That Think!") — a completely fictional American toy company, founded as the **Vogel Novelty Company** in Elk Grove Village, Illinois in 1961, renamed **VogelTronics** in the electronics craze of 1977, and dead by 1983 — forever in the wrong place at the wrong time.
 
@@ -14,7 +14,7 @@ This project exists to give a family of retro-toy homage projects a shared backs
 
 Game *mechanics* are not copyrightable; the invented VogelTronics branding stands in for the real-world brands the projects deliberately avoid.
 
-This history is the background lore for the [MetaIncognita](https://metaincognita.com) default page, which hosts playable recreations of VogelTronics' fictional catalog — including **Rovacon** (the programmable tank) and **Gridiron** / **Gridiron II** (the LED football handhelds). The games themselves are still being rebuilt, but Rovacon's voice is done: the history's games grid previews the three actual in-game voice clips, generated with [vogel-vox](https://github.com/cschweda/vogeltronics-vogel-vox).
+This history is the background lore for [vogeltronics.com](https://vogeltronics.com), which hosts playable recreations of VogelTronics' fictional catalog — including **Rovacon** (the programmable tank) and **Gridiron** / **Gridiron II** (the LED football handhelds). The games themselves are still being rebuilt, but Rovacon's voice is done: the history's games grid previews the three actual in-game voice clips, generated with [vogel-vox](https://github.com/cschweda/vogeltronics-vogel-vox).
 
 ## The story
 
@@ -34,6 +34,18 @@ The page covers, era by era:
 
 There is no build step and there are no dependencies. The entire site — markup, styles, all 18 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~2 MB). The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), and the source WAVs for the embedded Rovacon clips. `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
+`tools/make-og-image.py` regenerates the social card (`assets/og-image.png`). It is the **shared generator every VogelTronics property uses**, so the whole catalog's cards match:
+
+```bash
+python3 tools/make-og-image.py \
+  --boxart assets/larry-box-art.png \
+  --logo assets/vogeltronics-logo.svg \
+  --title "THE WHOLE STORY" \
+  --subtitle "VOGELTRONICS · 1961–1983" \
+  --url vogeltronics.com \
+  --out assets/og-image.png
+```
+
 To view locally, open `index.html` in a browser, or serve the folder:
 
 ```bash
@@ -42,7 +54,7 @@ npx serve .
 
 ## Deployment
 
-Deployed on [Netlify](https://www.netlify.com/) at [vogeltronics.metaincognita.com](https://vogeltronics.metaincognita.com). `netlify.toml` publishes the repo root as-is; every push to `main` deploys.
+Deployed on [Netlify](https://www.netlify.com/) at [history.vogeltronics.com](https://history.vogeltronics.com). `netlify.toml` publishes the repo root as-is; every push to `main` deploys.
 
 ## Legal
 
