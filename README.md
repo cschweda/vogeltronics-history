@@ -4,7 +4,7 @@
 
 # VogelTronics — The Whole Story
 
-**Live site:** [history.vogeltronics.com](https://history.vogeltronics.com)
+**Live site:** [history.vogeltronics.com](https://history.vogeltronics.com) — also served at the bare [vogeltronics.com](https://vogeltronics.com) and `www`
 
 A single-page, magazine-style corporate history of **VogelTronics** ("Games That Think!") — a completely fictional American toy company, founded as the **Vogel Novelty Company** in Elk Grove Village, Illinois in 1961, renamed **VogelTronics** in the electronics craze of 1977, and dead by 1983 — forever in the wrong place at the wrong time.
 
@@ -14,7 +14,7 @@ This project exists to give a family of retro-toy homage projects a shared backs
 
 Game *mechanics* are not copyrightable; the invented VogelTronics branding stands in for the real-world brands the projects deliberately avoid.
 
-This history is the background lore for [vogeltronics.com](https://vogeltronics.com), which hosts playable recreations of VogelTronics' fictional catalog — including **Rovacon** (the programmable tank) and **Gridiron** / **Gridiron II** (the LED football handhelds). The games themselves are still being rebuilt, but Rovacon's voice is done: the history's games grid previews the three actual in-game voice clips, generated with [vogel-vox](https://github.com/cschweda/vogeltronics-vogel-vox).
+This history is the background lore for the playable recreations of VogelTronics' fictional catalog, indexed at [MetaIncognita](https://metaincognita.com) — including **Rovacon** (the programmable tank) and **Gridiron** / **Gridiron II** (the LED football handhelds). The games themselves are still being rebuilt, but Rovacon's voice is done: the history's games grid previews the three actual in-game voice clips, generated with [vogel-vox](https://github.com/cschweda/vogeltronics-vogel-vox).
 
 ## The story
 
@@ -42,7 +42,7 @@ python3 tools/make-og-image.py \
   --logo assets/vogeltronics-logo.svg \
   --title "THE WHOLE STORY" \
   --subtitle "VOGELTRONICS · 1961–1983" \
-  --url vogeltronics.com \
+  --url history.vogeltronics.com \
   --out assets/og-image.png
 ```
 
@@ -55,6 +55,7 @@ python3 ../vogeltronics-history/tools/make-og-image.py \
   --logo docs/images/vogeltronics-logo.svg \
   --title GRIDIRON \
   --subtitle "ELECTRONIC FOOTBALL · 1977" \
+  --url gridiron.vogeltronics.com \
   --out docs/images/og-image.png
 ```
 

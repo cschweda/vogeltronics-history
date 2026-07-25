@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-07-25
+
+### Changed
+
+- **The bare `vogeltronics.com` now serves this site**, alongside `www`, via a
+  DNSimple ALIAS to Netlify. The README said the apex was "where the playable
+  catalog lives"; it is the corporate history, so the copy says that instead
+  and points the catalog at MetaIncognita, where it is actually indexed.
+- **`make-og-image.py` now requires `--url`.** It defaulted to the bare apex,
+  which used to mean "the brand root" and now means this site specifically —
+  so the default was quietly wrong for every game repo. A card should carry
+  the address of the thing printed on it: this one says
+  `history.vogeltronics.com`, Gridiron's says `gridiron.vogeltronics.com`.
+- Regenerated `assets/og-image.png` accordingly.
+
 ## [2.2.0] - 2026-07-25
 
 ### Added

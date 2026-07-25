@@ -18,6 +18,7 @@ Usage — this site's own card:
       --logo assets/vogeltronics-logo.svg \
       --title "THE WHOLE STORY" \
       --subtitle "VOGELTRONICS · 1961-1983" \
+      --url history.vogeltronics.com \
       --out assets/og-image.png
 
 Usage — a game repo, from a sibling checkout:
@@ -27,6 +28,7 @@ Usage — a game repo, from a sibling checkout:
       --logo docs/images/vogeltronics-logo.svg \
       --title GRIDIRON \
       --subtitle "ELECTRONIC FOOTBALL · 1977" \
+      --url gridiron.vogeltronics.com \
       --out docs/images/og-image.png
 
 Requires Google Chrome (rendered via headless screenshot). No other deps.
@@ -123,9 +125,10 @@ def main() -> None:
     # Required, not defaulted: each property keeps its logo at a different
     # path, so any default here would be silently wrong almost everywhere.
     ap.add_argument("--logo", required=True)
-    # The brand root, not the game's own subdomain: every game in the catalog
-    # sits at <game>.vogeltronics.com, and the card should point at the house.
-    ap.add_argument("--url", default="vogeltronics.com")
+    # Required, like --logo. It defaulted to the bare apex, which now serves
+    # the corporate history specifically — so the default was quietly wrong for
+    # every game repo. A card should advertise the address of the thing on it.
+    ap.add_argument("--url", required=True)
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
