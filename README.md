@@ -4,7 +4,7 @@
 
 # VogelTronics — The Whole Story
 
-**Live site:** [history.vogeltronics.com](https://history.vogeltronics.com) — also served at the bare [vogeltronics.com](https://vogeltronics.com) and `www`
+**Live site:** [vogeltronics.com](https://vogeltronics.com) — the bare domain is the landing page. `www` and `history.vogeltronics.com` redirect to it.
 
 A single-page, magazine-style corporate history of **VogelTronics** ("Games That Think!") — a completely fictional American toy company, founded as the **Vogel Novelty Company** in Elk Grove Village, Illinois in 1961, renamed **VogelTronics** in the electronics craze of 1977, and dead by 1983 — forever in the wrong place at the wrong time.
 
@@ -42,7 +42,7 @@ python3 tools/make-og-image.py \
   --logo assets/vogeltronics-logo.svg \
   --title "THE WHOLE STORY" \
   --subtitle "VOGELTRONICS · 1961–1983" \
-  --url history.vogeltronics.com \
+  --url vogeltronics.com \
   --out assets/og-image.png
 ```
 
@@ -67,7 +67,7 @@ npx serve .
 
 ## Deployment
 
-Deployed on [Netlify](https://www.netlify.com/) at [history.vogeltronics.com](https://history.vogeltronics.com). `netlify.toml` publishes the repo root as-is; every push to `main` deploys.
+Deployed on [Netlify](https://www.netlify.com/) at [vogeltronics.com](https://vogeltronics.com). `netlify.toml` publishes the repo root as-is; every push to `main` deploys.
 
 ## Legal
 

@@ -18,7 +18,7 @@ Usage — this site's own card:
       --logo assets/vogeltronics-logo.svg \
       --title "THE WHOLE STORY" \
       --subtitle "VOGELTRONICS · 1961-1983" \
-      --url history.vogeltronics.com \
+      --url vogeltronics.com \
       --out assets/og-image.png
 
 Usage — a game repo, from a sibling checkout:
