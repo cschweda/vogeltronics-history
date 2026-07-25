@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-07-25
+
+### Added
+
+- **"The Next Ten Years" (1982).** A new section between the Cordless Detour
+  and the Colossus: the distributor bulletin in which VogelTronics, seven
+  years after the Altair and a year from the end, forecasts 1990. Some of it
+  is uncanny — a computer in every den, games arriving down the telephone
+  line, a machine that remembers your name. Some of it is not: the company
+  bet its forecast on the keyboard dying, because VogelVox had been talking
+  since 1979. It sets up a line the Crash section already had waiting —
+  Walter initials the sheet "agreed, but sooner", and never bought a home
+  computer.
+
 ## [2.1.0] - 2026-07-25
 
 ### Changed
