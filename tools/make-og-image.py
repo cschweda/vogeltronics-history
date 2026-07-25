@@ -1,13 +1,30 @@
 #!/usr/bin/env python3
-"""Generate a branded 1200x630 og:image for a VogelTronics game.
+"""Generate a branded 1200x630 og:image for any VogelTronics property.
 
-Reusable across every game in the universe: same dark, sleek layout —
-logo top-left, big title block, "GAMES THAT THINK!" sticker, boxart
-tilted on the right over a red LED glow, subtle 3x9 LED grid motif.
+THIS FILE IS CANONICAL. It lives here, in vogeltronics-history, alongside the
+rest of the brand tooling (gen_badge.py, gen_gridiron_boxart.py) and is shared
+by every property in the universe. Do NOT copy it into a game repo — a fork
+means the catalog's cards drift apart, which is the one thing this script
+exists to prevent. Run it from a sibling checkout instead, and commit only the
+resulting PNG to the game repo.
 
-Usage:
+Same layout everywhere: logo top-left, big title block, "GAMES THAT THINK!"
+sticker, boxart tilted on the right over a red LED glow, subtle 3x9 LED grid
+motif, brand URL bottom-left.
+
+Usage — this site's own card:
   python3 tools/make-og-image.py \
+      --boxart assets/larry-box-art.png \
+      --logo assets/vogeltronics-logo.svg \
+      --title "THE WHOLE STORY" \
+      --subtitle "VOGELTRONICS · 1961-1983" \
+      --out assets/og-image.png
+
+Usage — a game repo, from a sibling checkout:
+  cd ../vogeltronics-gridiron-i
+  python3 ../vogeltronics-history/tools/make-og-image.py \
       --boxart docs/images/gridiron-boxart.png \
+      --logo docs/images/vogeltronics-logo.svg \
       --title GRIDIRON \
       --subtitle "ELECTRONIC FOOTBALL · 1977" \
       --out docs/images/og-image.png
@@ -103,7 +120,9 @@ def main() -> None:
     ap.add_argument("--boxart", required=True)
     ap.add_argument("--title", required=True)
     ap.add_argument("--subtitle", required=True)
-    ap.add_argument("--logo", default="docs/images/vogeltronics-logo.svg")
+    # Required, not defaulted: each property keeps its logo at a different
+    # path, so any default here would be silently wrong almost everywhere.
+    ap.add_argument("--logo", required=True)
     # The brand root, not the game's own subdomain: every game in the catalog
     # sits at <game>.vogeltronics.com, and the card should point at the house.
     ap.add_argument("--url", default="vogeltronics.com")

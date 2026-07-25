@@ -34,7 +34,7 @@ The page covers, era by era:
 
 There is no build step and there are no dependencies. The entire site — markup, styles, all 18 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~2 MB). The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), and the source WAVs for the embedded Rovacon clips. `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
-`tools/make-og-image.py` regenerates the social card (`assets/og-image.png`). It is the **shared generator every VogelTronics property uses**, so the whole catalog's cards match:
+`tools/make-og-image.py` regenerates the social card (`assets/og-image.png`). **This repo is its canonical home** — it is the one generator every VogelTronics property uses, so the whole catalog's cards match. Game repos do not keep a copy; they run it from a sibling checkout and commit only the resulting PNG. For this site:
 
 ```bash
 python3 tools/make-og-image.py \
@@ -44,6 +44,18 @@ python3 tools/make-og-image.py \
   --subtitle "VOGELTRONICS · 1961–1983" \
   --url vogeltronics.com \
   --out assets/og-image.png
+```
+
+For a game repo, from a sibling checkout:
+
+```bash
+cd ../vogeltronics-gridiron-i
+python3 ../vogeltronics-history/tools/make-og-image.py \
+  --boxart docs/images/gridiron-boxart.png \
+  --logo docs/images/vogeltronics-logo.svg \
+  --title GRIDIRON \
+  --subtitle "ELECTRONIC FOOTBALL · 1977" \
+  --out docs/images/og-image.png
 ```
 
 To view locally, open `index.html` in a browser, or serve the folder:
