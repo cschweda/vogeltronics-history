@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2026-07-25
+
+### Added
+
+- **WTV (1981–1982)** — a new era section between the Cordless Detour and the
+  1982 forecast. In August 1981 Walter Vogel is told a channel called MTV has
+  launched, asks who M. V. is, and never gets a satisfactory answer. Concluding
+  that a rival had beaten him to the initials — he had been signing things
+  `WTV` for thirty-five years — he files for his own channel the following
+  month.
+- It would not be music. He had never owned a record, and left the room when
+  his wife played Johnny Mathis. What he proposed instead was a channel of men
+  at a table, around the clock, saying whose fault it was. The prospectus is
+  the load-bearing joke: "a table, two chairs, and a fellow with opinions —
+  nothing to manufacture, nothing to ship, nothing to recall." A man who had
+  spent twenty years losing money on tooling and forty-pound batteries had a
+  product with no unit cost in his hand in 1981 and never bought a
+  transmitter.
+- He talked himself out of it by spring 1982, on the grounds that the country
+  had turned too serious for grievance after the peanut farmer. Early by about
+  forty years. The section deliberately never names what he invented and
+  abandoned — the reader does that arithmetic, and it lands harder unspoken.
+- The section also sets up a payoff that was already on the page: "The Next
+  Ten Years" has Walter initialling the forecast `WTV — agreed, but sooner`
+  one paragraph later, so the initials now read as a running gesture rather
+  than a detail.
+- `WTV` added to the fictional-inventions list in the page footer.
+
 ## [2.4.0] - 2026-07-25
 
 ### Changed
