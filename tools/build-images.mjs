@@ -58,25 +58,25 @@ const widthFor = (name) =>
   WIDTHS[name] ?? (name.startsWith("photo-") ? WIDTHS.__photo : WIDTHS.__box);
 
 /** Build a single source file. Returns {name, width, height, before, after}. */
-export async function buildOne(file) {
+export async function buildOne(file, out = OUT) {
   const { name } = parse(file);
   const from = join(SRC, file);
   const info = await sharp(from)
     .resize({ width: widthFor(name), withoutEnlargement: true })
     .webp({ quality: 82, effort: 6 })
-    .toFile(join(OUT, `${name}.webp`));
+    .toFile(join(out, `${name}.webp`));
   return { name, ...info, before: (await stat(from)).size, after: info.size };
 }
 
 export const isImage = (f) => /\.(png|jpe?g)$/i.test(f);
 
-export async function buildAll({ quiet = false } = {}) {
-  await mkdir(OUT, { recursive: true });
+export async function buildAll({ quiet = false, out = OUT } = {}) {
+  await mkdir(out, { recursive: true });
   const files = (await readdir(SRC)).filter(isImage).sort();
   if (!files.length) throw new Error(`no source images in ${SRC}/`);
 
   const rows = [];
-  for (const file of files) rows.push(await buildOne(file));
+  for (const file of files) rows.push(await buildOne(file, out));
 
   const inB = rows.reduce((a, r) => a + r.before, 0);
   const outB = rows.reduce((a, r) => a + r.after, 0);

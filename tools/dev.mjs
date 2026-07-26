@@ -21,14 +21,15 @@
  *                                  free port up is used
  */
 import { createServer } from "node:http";
-import { readFile, stat } from "node:fs/promises";
+import { readFile, stat, cp } from "node:fs/promises";
 import { watch } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
-import { buildAll, buildOne, isImage, SRC } from "./build-images.mjs";
+import { buildOne, isImage, SRC, OUT } from "./build-images.mjs";
+import { build, DIST } from "./build.mjs";
 import { createHash } from "node:crypto";
 import { csp, scriptHashes } from "./csp.mjs";
 
-const ROOT = resolve(".");
+const ROOT = resolve(DIST);   // serve what production serves
 const START_PORT = Number(process.env.PORT) || 3000;
 
 const TYPES = {
@@ -77,8 +78,8 @@ const reloadAll = () => {
   for (const res of clients) res.write("data: reload\n\n");
 };
 
-console.log("building images…");
-await buildAll({ quiet: true });
+console.log("building…");
+await build({ quiet: true });
 
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, "http://localhost");
@@ -138,11 +139,14 @@ server.on("error", (err) => {
 });
 server.listen(port, () => {
   console.log(`\n  http://localhost:${port}`);
-  console.log(`  watching index.html and ${SRC}/ — live reload on\n`);
+  console.log(`  serving ${DIST}/ — watching index.html and ${SRC}/, live reload on\n`);
 });
 
 // --------------------------------------------------------------- watchers
-watch("index.html", () => reloadAll());
+watch("index.html", async () => {
+  await cp("index.html", join(DIST, "index.html"));
+  reloadAll();
+});
 
 // fs.watch fires more than once per write on macOS; collapse bursts per file
 const pending = new Map();
@@ -154,7 +158,7 @@ watch(SRC, (_event, filename) => {
     setTimeout(async () => {
       pending.delete(filename);
       try {
-        const r = await buildOne(filename);
+        const r = await buildOne(filename, join(DIST, OUT));
         const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
         console.log(
           `  rebuilt ${r.name}.webp  ${r.width}x${r.height}  ${kb(r.before)} -> ${kb(r.after)}`

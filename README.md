@@ -44,7 +44,7 @@ There is one build step, and it exists for one reason: images. They used to be b
 
 - `assets/img-src/` holds the committed originals — PNG box art and logos, JPEG photographs.
 - `npm run build` runs `tools/build-images.mjs`, which uses [sharp](https://sharp.pixelplumbing.com/) to write right-sized WebP into `assets/img/`.
-- `assets/img/` is gitignored. Netlify regenerates it on every deploy.
+- `npm run build` assembles **`dist/`**, which is the only thing Netlify publishes and the only thing the dev server serves. It is gitignored and rebuilt on every deploy.
 
 Two things happen in that pass. **Format:** WebP beats the JPEG photographs and, by a wide margin, the flat-colour box art, which is the wrong kind of image for PNG at this size. There is no `<picture>` fallback — WebP has shipped in every browser since Safari 14 in 2020, and 31 elements of fallback markup is a bad trade. **Size:** every image was being sent far larger than it is ever displayed; the box art arrived 600 px wide to be drawn at 210. Each target is its CSS display width doubled, so a file is right for a 2× screen and no bigger. Together that is **2.9 MB → 885 KB, a 69% cut.**
 
@@ -95,7 +95,9 @@ Other scripts:
 | `npm run build` | rebuild `assets/img/` from `assets/img-src/` — what Netlify runs |
 | `npm run preview` | build, then serve through `netlify dev` so redirects and cache headers apply |
 
-**Opening `index.html` straight from disk no longer works.** `assets/img/` is build output and gitignored, so a fresh clone has no images until `npm install && npm run build`.
+`dist/` holds exactly what the page loads and nothing else — `index.html`, the built WebP, the nine voice clips, `og-image.png` for social crawlers, plus `robots.txt` and `sitemap.xml`. It was previously the repo root, which also served `package.json`, `tools/` and all 2.9 MB of full-resolution originals in `assets/img-src/` to anybody who asked: not a security problem, since the repo is public, but five times the deploy weight and a second copy of every photograph offered to crawlers. Paths inside `dist/` mirror the repo, so nothing in `index.html` had to change.
+
+**Opening `index.html` straight from disk no longer works.** It needs `assets/img/`, which is build output, so a fresh clone wants `npm install && npm run dev`.
 
 ## Security headers
 

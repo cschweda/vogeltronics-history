@@ -14,5 +14,5 @@ node_modules/
 __pycache__/
 *.pyc
 
-# Build output — `npm run build` regenerates assets/img/ from assets/img-src/
-assets/img/
+# Build output — `npm run build` assembles dist/ from index.html + assets/
+dist/

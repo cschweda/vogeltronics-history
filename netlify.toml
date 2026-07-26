@@ -5,10 +5,12 @@
 # painted until all of it arrived — FCP and LCP both landed at 16.7 s on a
 # throttled mobile connection. The originals now live in assets/img-src/, and
 # `npm run build` (tools/build-images.mjs, via sharp) writes right-sized WebP
-# into assets/img/, which is gitignored and regenerated on every deploy.
+# into dist/assets/img/. dist/ is gitignored, rebuilt on every deploy, and holds
+# only what the page loads — publishing the repo root also served package.json,
+# tools/ and 2.9 MB of full-resolution originals to anyone who asked.
 [build]
   command = "npm run build"
-  publish = "."
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
