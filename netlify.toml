@@ -29,3 +29,17 @@
 # retired, not moved; a redirect would keep it alive. It is removed from the
 # site's domains in the Netlify dashboard instead, which is what drops it from
 # the certificate.
+
+# The six Larry voice clips are the only files the page actually fetches at
+# runtime — every image is a data URI inside index.html. They were being served
+# with no Cache-Control at all, so a repeat visitor re-downloaded 232 KiB of
+# WAV to hear the same six lines. They are immutable in practice: a clip is
+# re-cut under a new name, never edited in place.
+#
+# Scoped to *.wav on purpose. A blanket rule over /assets/* would also pin
+# og-image.png, which make-og-image.py regenerates under the same filename and
+# which social crawlers must be able to re-fetch.
+[[headers]]
+  for = "/assets/*.wav"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

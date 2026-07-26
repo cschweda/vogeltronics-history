@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.2] - 2026-07-26
+
+### Fixed
+
+- **Accessibility is 100 on Lighthouse and clean on axe-core**, mobile and desktop, at WCAG 2.2 AA. Three real defects:
+  - **No `<main>` landmark.** The document was divs all the way down, so a screen-reader user had no way to skip the nav and the marquee and get to the history. `.page` is now `<main class="page">`, with `<footer>` moved outside it so the landmark holds the history and nothing else.
+  - **`.play` buttons failed contrast.** White on `#ff4436` is 3.4:1, under the 4.5:1 floor for text that size. A new `--red-deep: #e02a1a` is used for that background only — `--red` is untouched everywhere else, so nothing about the page's colour changes except the one control that was failing. Independently confirmed: 375 of 375 text/background pairs now pass AA, including the nine axe could not resolve automatically because they sit on gradients.
+  - **A console error on every load.** No favicon was declared, so every visit 404'd on `/favicon.ico`. Now an inline SVG data URI — no request, no file, page stays self-contained.
+- **All 31 images carry explicit `width` and `height`.** Without them the browser cannot reserve space and the page reflows as each data URI decodes. Dimensions are read out of the embedded PNG/JPEG headers rather than typed by hand, so they cannot drift from the actual bytes. `.boxart` gained `height:auto` — the one image rule that lacked it — so the attributes stay hints and CSS keeps control of layout. The five games-grid images whose `src` is assigned by JS are sized from their source art.
+- **The six Larry voice clips now carry cache headers.** They are the only files the page fetches at runtime, and they were served with no `Cache-Control` at all, so a repeat visitor re-downloaded 232 KiB to hear the same six lines. Scoped to `/assets/*.wav` deliberately: a blanket rule over `/assets/*` would also pin `og-image.png`, which `make-og-image.py` regenerates under the same filename and which social crawlers must be able to re-fetch.
+- Every image already had alt text; nothing needed adding. Verified at 320 px, 360 px, 390 px and 860 px with no horizontal overflow.
+
+### Known
+
+- **Mobile performance is 55, and it is the single-file design.** Desktop is 100. `index.html` is 4.39 MB because every image is a base64 data URI, and on Lighthouse's throttled mobile profile nothing paints until the document arrives: FCP and LCP both land at 16.8 s live. The page was 2.32 MB this morning and gained ten photographs. Extracting the photographs to `assets/` and referencing them normally would drop the document to roughly 60 KB and the metrics to well under a second, at the cost of "one self-contained file, no build step" — which is a deliberate architectural choice, so it stays until someone decides otherwise. `loading="lazy"` is not a workaround: there are no image requests to defer.
+
 ## [2.6.1] - 2026-07-26
 
 ### Added
