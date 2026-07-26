@@ -6,7 +6,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "node tools/build-images.mjs"
+    "dev": "node tools/dev.mjs",
+    "build": "node tools/build-images.mjs",
+    "preview": "npm run build && npx --yes netlify dev"
   },
   "dependencies": {
     "sharp": "^0.35.3"

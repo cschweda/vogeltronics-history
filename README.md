@@ -77,11 +77,25 @@ python3 ../vogeltronics-history/tools/make-og-image.py \
   --out docs/images/og-image.png
 ```
 
-To view locally, open `index.html` in a browser, or serve the folder:
+### Running it locally
 
 ```bash
-npx serve .
+npm install     # once — sharp, and nothing else
+npm run dev     # http://localhost:3000
 ```
+
+`npm run dev` builds the images, serves the repo root, and live-reloads the browser when `index.html` or anything in `assets/img-src/` changes — a changed original is re-encoded on its own, not all twenty-four. `PORT=4000 npm run dev` picks a different port; if it is taken, the next free one up is used.
+
+There is **no HMR**, and there is nothing here for it to do. HMR swaps JS modules in place; this page has no modules, no imports, and all of its CSS is in one `<style>` block inside `index.html`, so any change is a full reload whatever tooling sits in front of it. `tools/dev.mjs` is a static file server plus about ten lines of server-sent events — no dependencies, because installing several hundred packages to reload one file is not a trade worth making.
+
+Other scripts:
+
+| | |
+| --- | --- |
+| `npm run build` | rebuild `assets/img/` from `assets/img-src/` — what Netlify runs |
+| `npm run preview` | build, then serve through `netlify dev` so redirects and cache headers apply |
+
+**Opening `index.html` straight from disk no longer works.** `assets/img/` is build output and gitignored, so a fresh clone has no images until `npm install && npm run build`.
 
 ## Deployment
 

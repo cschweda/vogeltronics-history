@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **28 of 31 images are `loading="lazy"` with `decoding="async"`.** The three that stay eager are the masthead lockup and the founder portrait, which are in the first viewport on a phone, plus its duplicate; both are preloaded with `fetchpriority="high"`.
 - The three Rovacon voice clips were also data URIs. They are byte-identical to WAVs already sitting in `assets/`, so they now point at those files instead of shipping twice.
 
+### Added
+
+- **`npm run dev`** — builds the images, serves the repo root on port 3000, and live-reloads when `index.html` or anything in `assets/img-src/` changes. A changed original is re-encoded on its own rather than rebuilding all twenty-four. `PORT` overrides the port; a busy one walks up to the next free.
+- **No HMR, deliberately.** HMR swaps JS modules in place. This page has no modules, no imports, and all of its CSS in one `<style>` block inside `index.html` — so every change is a full reload whatever sits in front of it. `tools/dev.mjs` is therefore a static file server plus about ten lines of server-sent events, with **no dependencies**. browser-sync was tried first, failed to inject its client, and would have been several hundred packages to reload one file.
+- `npm run preview` serves through `netlify dev`, so redirects and cache headers apply.
+- Note that opening `index.html` straight off disk no longer works: `assets/img/` is build output and gitignored, so a fresh clone needs `npm install && npm run build` first.
+
 ### Result
 
 Mobile performance **55 → 90** measured locally, LCP **16.7 s → 3.7 s**, with accessibility, best practices and SEO holding at 100. Desktop stays 100 across all four.

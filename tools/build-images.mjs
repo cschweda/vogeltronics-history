@@ -22,13 +22,18 @@
  *
  * Nothing is upscaled: withoutEnlargement means a source already at or under
  * its target is re-encoded but not stretched.
+ *
+ * Usage:
+ *   node tools/build-images.mjs           build everything, print a table
+ *   node tools/build-images.mjs --quiet   build everything, print one line
+ *   buildOne(file)                        exported for the dev watcher
  */
 import sharp from "sharp";
 import { readdir, mkdir, stat } from "node:fs/promises";
 import { join, parse } from "node:path";
 
-const SRC = "assets/img-src";
-const OUT = "assets/img";
+export const SRC = "assets/img-src";
+export const OUT = "assets/img";
 
 // target width = CSS display width x2, for a 2x screen
 const WIDTHS = {
@@ -52,45 +57,49 @@ const WIDTHS = {
 const widthFor = (name) =>
   WIDTHS[name] ?? (name.startsWith("photo-") ? WIDTHS.__photo : WIDTHS.__box);
 
-await mkdir(OUT, { recursive: true });
-
-const files = (await readdir(SRC)).filter((f) => /\.(png|jpe?g)$/i.test(f));
-if (!files.length) {
-  console.error(`no source images in ${SRC}/`);
-  process.exit(1);
-}
-
-let inBytes = 0;
-let outBytes = 0;
-const rows = [];
-
-for (const file of files.sort()) {
+/** Build a single source file. Returns {name, width, height, before, after}. */
+export async function buildOne(file) {
   const { name } = parse(file);
   const from = join(SRC, file);
-  const to = join(OUT, `${name}.webp`);
-
   const info = await sharp(from)
     .resize({ width: widthFor(name), withoutEnlargement: true })
     .webp({ quality: 82, effort: 6 })
-    .toFile(to);
-
-  const before = (await stat(from)).size;
-  inBytes += before;
-  outBytes += info.size;
-  rows.push([
-    `${name}.webp`,
-    `${info.width}x${info.height}`,
-    before,
-    info.size,
-    Math.round((1 - info.size / before) * 100),
-  ]);
+    .toFile(join(OUT, `${name}.webp`));
+  return { name, ...info, before: (await stat(from)).size, after: info.size };
 }
 
-const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
-for (const [n, dim, b, a, pct] of rows) {
-  console.log(`  ${n.padEnd(32)} ${dim.padEnd(10)} ${kb(b).padStart(8)} -> ${kb(a).padStart(8)}  -${pct}%`);
+export const isImage = (f) => /\.(png|jpe?g)$/i.test(f);
+
+export async function buildAll({ quiet = false } = {}) {
+  await mkdir(OUT, { recursive: true });
+  const files = (await readdir(SRC)).filter(isImage).sort();
+  if (!files.length) throw new Error(`no source images in ${SRC}/`);
+
+  const rows = [];
+  for (const file of files) rows.push(await buildOne(file));
+
+  const inB = rows.reduce((a, r) => a + r.before, 0);
+  const outB = rows.reduce((a, r) => a + r.after, 0);
+  const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
+
+  if (!quiet) {
+    for (const r of rows) {
+      console.log(
+        `  ${(r.name + ".webp").padEnd(32)} ${`${r.width}x${r.height}`.padEnd(10)}` +
+          ` ${kb(r.before).padStart(8)} -> ${kb(r.after).padStart(8)}` +
+          `  -${Math.round((1 - r.after / r.before) * 100)}%`
+      );
+    }
+    console.log("");
+  }
+  console.log(
+    `  ${rows.length} images  ${kb(inB)} -> ${kb(outB)}  ` +
+      `(-${Math.round((1 - outB / inB) * 100)}%)`
+  );
+  return rows;
 }
-console.log(
-  `\n  ${files.length} images  ${kb(inBytes)} -> ${kb(outBytes)}  ` +
-    `(-${Math.round((1 - outBytes / inBytes) * 100)}%)`
-);
+
+// run directly, not imported
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await buildAll({ quiet: process.argv.includes("--quiet") });
+}
