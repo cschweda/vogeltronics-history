@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.1] - 2026-07-26
+
+### Added
+
+- **A Content-Security-Policy, and the rest of the security headers**, on every response from `netlify.toml`.
+  - **`script-src` is a bare SHA-256 hash.** The page has exactly one inline `<script>` and no `on*=` handlers anywhere, so no `'unsafe-inline'` and no nonce is required — an injected `<script>` simply does not run. That is the directive that actually matters.
+  - `style-src` keeps `'unsafe-inline'` because the markup carries 29 `style=""` attributes, which a hash cannot cover. A style attribute cannot execute anything, and the usual CSS exfiltration route needs the network, which `connect-src 'none'` and `img-src 'self' data:` close off.
+  - Everything else is `'none'`: no fonts (system stacks), no requests, no embedding, no form submission. External links are `<a href>` navigations, which CSP does not gate.
+  - Plus `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Cross-Origin-Opener-Policy: same-origin`, `X-Frame-Options: DENY`, a `Permissions-Policy` denying every feature, and HSTS at one year with `includeSubDomains`. HSTS `preload` deliberately omitted — a one-way door needing a removal request to undo.
+- **`npm run build` verifies the hash before it does anything else** (`tools/csp.mjs`). A hash-based CSP has one failure mode: edit the inline script, and the browser silently refuses to run it. Now a stale hash fails the deploy instead, and Netlify keeps serving the last good build. The check also fails if an inline event handler appears, and prints the correct replacement hash. `npm run dev` sends the same headers — with the reload script's own hash added — so a CSP mistake surfaces locally.
+
 ## [2.7.0] - 2026-07-26
 
 ### Changed

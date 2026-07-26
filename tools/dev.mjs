@@ -25,6 +25,8 @@ import { readFile, stat } from "node:fs/promises";
 import { watch } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
 import { buildAll, buildOne, isImage, SRC } from "./build-images.mjs";
+import { createHash } from "node:crypto";
+import { csp, scriptHashes } from "./csp.mjs";
 
 const ROOT = resolve(".");
 const START_PORT = Number(process.env.PORT) || 3000;
@@ -55,6 +57,20 @@ const RELOAD = `
 })();
 </script>
 `;
+
+// Serve the production security headers in dev too, so a CSP mistake shows up
+// here rather than on the live site. The reload script below is inline, so its
+// own hash has to join script-src — that is the only difference from prod.
+const RELOAD_HASH = `'sha256-${createHash("sha256")
+  .update(RELOAD.match(/<script>([\s\S]*?)<\/script>/)[1])
+  .digest("base64")}'`;
+
+const SECURITY = (html) => ({
+  "Content-Security-Policy": csp(scriptHashes(html), [RELOAD_HASH]),
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+});
 
 const clients = new Set();
 const reloadAll = () => {
@@ -92,13 +108,17 @@ const server = createServer(async (req, res) => {
     if ((await stat(file)).isDirectory()) throw new Error("dir");
     const type = TYPES[extname(file).toLowerCase()] ?? "application/octet-stream";
     let body = await readFile(file);
+    let security = {};
     if (type.startsWith("text/html")) {
-      body = Buffer.from(String(body).replace(/<\/body>/i, RELOAD + "</body>"));
+      const html = String(body);
+      security = SECURITY(html);
+      body = Buffer.from(html.replace(/<\/body>/i, RELOAD + "</body>"));
     }
     res.writeHead(200, {
       "Content-Type": type,
       "Content-Length": body.length,
       "Cache-Control": "no-store",
+      ...security,
     });
     res.end(body);
   } catch {

@@ -50,6 +50,43 @@
 # Scoped to *.wav on purpose. A blanket rule over /assets/* would also pin
 # og-image.png, which make-og-image.py regenerates under the same filename and
 # which social crawlers must be able to re-fetch.
+# Security headers, applied to everything.
+#
+# The page has exactly one inline <script> and no on*= handlers anywhere, so
+# script-src is a bare SHA-256 hash — no 'unsafe-inline', no nonce, no server.
+# That is the directive that actually matters, and it is the one that would
+# stop an injected <script> dead.
+#
+# style-src keeps 'unsafe-inline' because the markup carries 29 style=""
+# attributes and a hash cannot cover those. Smaller concession than it looks: a
+# style attribute cannot execute anything, and the usual CSS exfiltration trick
+# needs to reach the network, which connect-src 'none' and img-src 'self' data:
+# between them prevent.
+#
+# Everything else is off. No fonts are loaded (system stacks), the page makes
+# no requests of any kind, embeds nothing and submits nothing. The external
+# links in the document are <a href> navigations, which CSP does not gate.
+#
+# The hash is the fragile part — change a byte of the inline script and the
+# browser silently refuses to run it. `npm run build` verifies it, so a
+# mismatch fails the deploy and Netlify keeps serving the last good build.
+# Regenerate with: node tools/csp.mjs --print
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'none'; script-src 'sha256-syU2B6V8AMwitZDUod+mbWCtoy1+dVC2qlA5kjLXy6Y='; style-src 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # frame-ancestors above covers modern browsers; this is for the old ones
+    X-Frame-Options = "DENY"
+    # Nothing here uses any of it.
+    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()"
+    # includeSubDomains is safe here: gridiron., vogelvox. and history. are all
+    # Netlify-hosted and HTTPS-only. `preload` is deliberately NOT set — it is
+    # a one-way door that needs a removal request to undo.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
 [[headers]]
   for = "/assets/*.wav"
   [headers.values]

@@ -97,6 +97,20 @@ Other scripts:
 
 **Opening `index.html` straight from disk no longer works.** `assets/img/` is build output and gitignored, so a fresh clone has no images until `npm install && npm run build`.
 
+## Security headers
+
+`netlify.toml` sets a Content-Security-Policy and the usual companions on every response.
+
+The page has exactly one inline `<script>` and no `on*=` handlers anywhere, so **`script-src` is a bare SHA-256 hash** — no `'unsafe-inline'`, no nonce, no server needed. That is the directive that matters: an injected `<script>` does not run.
+
+`style-src` keeps `'unsafe-inline'`, because the markup carries 29 `style=""` attributes and a hash cannot cover those. Smaller concession than it looks — a style attribute cannot execute anything, and the usual CSS exfiltration trick needs to reach the network, which `connect-src 'none'` and `img-src 'self' data:` between them prevent.
+
+Everything else is `'none'`. No fonts are loaded (system stacks only), the page makes no requests of any kind, embeds nothing and submits nothing. The external links in the document are `<a href>` navigations, which CSP does not gate.
+
+Also set: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Cross-Origin-Opener-Policy: same-origin`, `X-Frame-Options: DENY` (for browsers predating `frame-ancestors`), a `Permissions-Policy` denying every feature, and HSTS at one year with `includeSubDomains`. HSTS `preload` is deliberately **not** set — it is a one-way door that needs a removal request to undo.
+
+**The hash is the fragile part.** Change one byte of the inline script and the browser silently refuses to run it. So `npm run build` verifies it before doing anything else, which means a stale hash fails the Netlify deploy and Netlify keeps serving the last good build — loud, and safe. It also fails if an inline event handler appears, since CSP would block that too. `npm run dev` sends the same headers, so a mistake surfaces locally rather than in production. Regenerate with `node tools/csp.mjs --print`.
+
 ## Deployment
 
 Deployed on [Netlify](https://www.netlify.com/) at [vogeltronics.com](https://vogeltronics.com). `netlify.toml` publishes the repo root as-is; every push to `main` deploys.
