@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.7] - 2026-07-26
+
+### Changed
+
+- **The italic fiction note under the lead is removed**, so the Fargo card stands unqualified. Machine-readable disclosure is untouched: the footer disclaimer, `genre: "Fiction"` and the `disambiguatingDescription` in the JSON-LD, and the fiction notice that opens `llms.txt` all remain exactly as they were.
+- **Three places broke the frame from inside the narrative voice, and are repaired.** With the card at the top claiming a true story, any sentence conceding invention undercuts it:
+  - The Rovacon sound note opened *"The history is a joke."* — the one flat concession on the page. Now *"Whatever you make of the rest of it, the voice is real"*, which acknowledges the reader's scepticism without admitting anything, and still gets to the real point: the formant synthesis actually exists.
+  - The builders' note said the module was the re-creation of the VogelVox chip *"in this universe"*, which says out loud that there is a universe. Cut.
+  - The Epilogue credit said each game is rebuilt *"from the invented original"* — added earlier the same day, and the same mistake. Now just "from the original".
+- A full sweep of the visible narrative for *fiction, made up, not real, parody, this universe* now returns nothing. The footer disclaimer is deliberately left standing: it sits outside the story, in small print, at the very end, and it is now the only human-visible disclosure on the page.
+
+### Fixed
+
+- **"Rate card" is explained.** It is broadcast trade jargon and read as noise to anyone outside the industry. It now gets its own sentence — a station's price list, so many dollars for thirty seconds at such an hour — plus the reason Vogel had one at all: it is the first document a station that does not exist yet can produce. The WTV photo caption no longer leans on the term either.
+
 ## [2.7.6] - 2026-07-26
 
 ### Added
