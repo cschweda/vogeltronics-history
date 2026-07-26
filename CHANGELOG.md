@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2026-07-26
+
+### Added
+
+- **Three photographs**, all embedded as JPEG data URIs alongside the existing PNG box art:
+  - **The pinewood derby, 1958** — Vogel in a Scout leader's uniform, cigar clenched, watching a heat run down a Pack 12 track. It sits in the Derby section directly beneath the recalled 1974 box, which is the whole joke: the thing he loved, and the thing engineering made of it.
+  - **The company Christmas party, late 1970s** — in the banquet room of the Italian restaurant across the lot, the VOGELTRONICS sign visible through the glass. Left to right: Ray Kessler, Walter T. Vogel, Diane Vogel, and Walter T. Vogel Jr. It goes in The Electronic Reinvention, the section that introduces Diane and Kessler, and is the only frame in which the whole cast appears at once — including the son who would be handed the Colossus five years later.
+  - **Vogel at his desk, autumn 1982** — shirtsleeves, cigar, pen in hand over stacks of paper, under the "Games That Think!" sign. It anchors The Next Ten Years, which had been the site's longest unbroken run of text.
+- `figure.photo` — a wider figure treatment (`min(520px, 92%)`) with a hairline border, for photographs as distinct from box art.
+- The desk photograph also heads the README, under the opening paragraph, captioned so it sets up "Why a fictional company?" directly beneath it. It is served from a web-sized copy (`assets/vogel-at-his-desk-web.jpg`, 204 KB) rather than the 2.1 MB source.
+
+### Changed
+
+- **The founder portrait is now a photograph.** The illustrated Walter T. Vogel — which carried its own frame plus "A WORD FROM OUR FOUNDER" and the name and dates baked into the artwork, duplicating the markup around it — is replaced by a straight portrait in both places it appears: the founder banner under the masthead and The Founding.
+
 ## [2.5.0] - 2026-07-25
 
 ### Added

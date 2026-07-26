@@ -8,6 +8,12 @@
 
 A single-page, magazine-style corporate history of **VogelTronics** ("Games That Think!") — a completely fictional American toy company, founded as the **Vogel Novelty Company** in Elk Grove Village, Illinois in 1961, renamed **VogelTronics** in the electronics craze of 1977, and dead by 1983 — forever in the wrong place at the wrong time.
 
+<p align="center">
+  <img src="assets/vogel-at-his-desk-web.jpg" alt="Walter T. Vogel at his office desk in shirtsleeves, cigar in mouth, pen in hand over stacks of paper, beneath the VogelTronics &quot;Games That Think!&quot; sign" width="680">
+  <br>
+  <em>Walter T. Vogel in his Elk Grove Village office, autumn 1982 — signing off on the forecast that contained the company's best prediction and its worst. He is fictional. So is the company, the sign behind him, and the office park out the window.</em>
+</p>
+
 ## Why a fictional company?
 
 This project exists to give a family of retro-toy homage projects a shared backstory. The goal was to recreate the feel of the golden age of electronic handhelds and programmable toys — but the real things are protected trademarks and trade dress. So instead of imitating a real company, VogelTronics was invented from scratch: its own founder, its own catalog, its own logos, and its own string of heartbreaking near-misses.
@@ -32,7 +38,7 @@ The page covers, era by era:
 
 ## Tech
 
-There is no build step and there are no dependencies. The entire site — markup, styles, all 18 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~2 MB). The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), and the source WAVs for the embedded Rovacon clips. `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
+There is no build step and there are no dependencies. The entire site — markup, styles, all 21 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~3 MB). The box art and logos are PNG; the four photographs are JPEG, resized to 1000 px wide (480 px for the portrait) so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the full-resolution photograph sources (`vogelheadshot-*.png`, `pinewoodderby.png`, `vogel_at_his_desk.png`, `christmasparty.png`) plus the web-sized copy this README displays (`vogel-at-his-desk-web.jpg`), and the source WAVs for the embedded Rovacon clips. `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
 `tools/make-og-image.py` regenerates the social card (`assets/og-image.png`). **This repo is its canonical home** — it is the one generator every VogelTronics property uses, so the whole catalog's cards match. Game repos do not keep a copy; they run it from a sibling checkout and commit only the resulting PNG. For this site:
 
