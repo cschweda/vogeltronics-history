@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.2] - 2026-07-26
+
+### Added
+
+- **JSON-LD structured data, written fiction-first.** An `Article` block with author, `datePublished`, `dateModified`, licence and image — but the load-bearing fields are `genre: "Fiction"`, a `disambiguatingDescription` stating plainly that no such company existed, and an `about` naming VogelTronics as an invented organisation. Making this page more machine-legible without that would have been actively harmful: the whole craft of it is a *convincing* fake corporate history, and an AI system that ingests it uncritically will repeat 1979 product recalls that never happened. The disclaimer was in the footer prose, where a parser will not look. Now it is in the markup.
+- **`llms.txt`** ([llmstxt.org](https://llmstxt.org)), same principle — it opens with the fiction notice, then lists every invented name explicitly, then separates them from the real names the page uses as period furniture (Sears, Atari, MTV, Hoover, Jo-Ann Fabrics, Bobby Fischer, Johnny Mathis) and notes that nothing attributed to those is a factual claim.
+- `<meta name="author">`, and `dateModified` injected at build time from the build date — the site rebuilds on every deploy, so it is accurate by construction and cannot drift the way a hand-maintained date would.
+
+### Changed
+
+- **Meta description cut from 211 to 129 characters.** Over 160 gets truncated in search results and in link previews on Slack, iMessage and everywhere else.
+- **`connect-src` relaxed from `'none'` to `'self'`.** Lighthouse reads `/robots.txt` with an in-page `fetch()`, which `'none'` blocked — so it reported the file as invalid when it was merely unreadable, costing SEO 92 for a file that was perfectly well-formed. `'self'` still blocks exfiltration to any other origin, which is the actual threat, and `script-src` remains hash-locked either way.
+- `tools/csp.mjs` no longer hashes `type="application/ld+json"` blocks. They are data the browser never executes, so CSP does not gate them and hashing one would have been meaningless — but the build's "exactly one inline script" check would have failed on it.
+
 ## [2.7.1] - 2026-07-26
 
 ### Added

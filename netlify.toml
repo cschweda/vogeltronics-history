@@ -62,7 +62,7 @@
 # style-src keeps 'unsafe-inline' because the markup carries 29 style=""
 # attributes and a hash cannot cover those. Smaller concession than it looks: a
 # style attribute cannot execute anything, and the usual CSS exfiltration trick
-# needs to reach the network, which connect-src 'none' and img-src 'self' data:
+# needs to reach the network, which connect-src 'self' and img-src 'self' data:
 # between them prevent.
 #
 # Everything else is off. No fonts are loaded (system stacks), the page makes
@@ -76,7 +76,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'none'; script-src 'sha256-syU2B6V8AMwitZDUod+mbWCtoy1+dVC2qlA5kjLXy6Y='; style-src 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'none'; script-src 'sha256-syU2B6V8AMwitZDUod+mbWCtoy1+dVC2qlA5kjLXy6Y='; style-src 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Cross-Origin-Opener-Policy = "same-origin"

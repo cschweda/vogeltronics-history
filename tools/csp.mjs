@@ -26,9 +26,14 @@
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 
-/** SHA-256 of every inline <script> body in a document, CSP-formatted. */
+/**
+ * SHA-256 of every *executable* inline <script> body, CSP-formatted.
+ *
+ * type="application/ld+json" is skipped: it is a data block the browser never
+ * executes, so CSP does not gate it and hashing it would be meaningless.
+ */
 export function scriptHashes(html) {
-  return [...html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(
+  return [...html.matchAll(/<script\b(?![^>]*\bsrc=)(?![^>]*ld\+json)[^>]*>([\s\S]*?)<\/script>/gi)].map(
     (m) => `'sha256-${createHash("sha256").update(m[1]).digest("base64")}'`
   );
 }
@@ -41,7 +46,12 @@ export function csp(hashes, extra = []) {
     "style-src 'unsafe-inline'",
     "img-src 'self' data:",
     "media-src 'self'",
-    "connect-src 'none'",
+    // 'self' rather than 'none'. The page itself makes no requests at all, but
+    // Lighthouse reads /robots.txt with an in-page fetch(), and 'none' blocked
+    // it — reporting the file as invalid when it was simply unreadable. 'self'
+    // still stops exfiltration to any other origin, which is the actual threat,
+    // and script-src is hash-locked regardless.
+    "connect-src 'self'",
     "font-src 'none'",
     "object-src 'none'",
     "base-uri 'none'",
