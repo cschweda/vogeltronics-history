@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **JSON-LD structured data, written fiction-first.** An `Article` block with author, `datePublished`, `dateModified`, licence and image — but the load-bearing fields are `genre: "Fiction"`, a `disambiguatingDescription` stating plainly that no such company existed, and an `about` naming VogelTronics as an invented organisation. Making this page more machine-legible without that would have been actively harmful: the whole craft of it is a *convincing* fake corporate history, and an AI system that ingests it uncritically will repeat 1979 product recalls that never happened. The disclaimer was in the footer prose, where a parser will not look. Now it is in the markup.
 - **`llms.txt`** ([llmstxt.org](https://llmstxt.org)), same principle — it opens with the fiction notice, then lists every invented name explicitly, then separates them from the real names the page uses as period furniture (Sears, Atari, MTV, Hoover, Jo-Ann Fabrics, Bobby Fischer, Johnny Mathis) and notes that nothing attributed to those is a factual claim.
-- `<meta name="author">`, and `dateModified` injected at build time from the build date — the site rebuilds on every deploy, so it is accurate by construction and cannot drift the way a hand-maintained date would.
+- **Authorship: Christopher Schweda**, in `<meta name="author">`, in the JSON-LD as both `author` and `publisher` with the GitHub profile as `url`, and in `llms.txt` under its own heading — attribution was one of the AI-readiness checks, and a handle is not a name.
+- `dateModified` injected at build time from the build date — the site rebuilds on every deploy, so it is accurate by construction and cannot drift the way a hand-maintained date would.
 
 ### Changed
 
