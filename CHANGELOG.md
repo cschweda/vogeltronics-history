@@ -7,11 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.6.1] - 2026-07-26
 
+### Added
+
+- **The VT-7000 assembly line** — Vogel on the factory floor in 1980, pointing down a line of answer spheres, every one of them lit with the same three words. It sits in Electrify Everything between the Oracle box art and the misfires grid: the box art's caption is the setup ("it knew all. Specifically, it knew one thing"), the photograph is the joke, and the grid underneath is the technical account of how a mask ROM made it permanent. The banner in the shot reads MODEL VT-7000, which is the number the Oracle card already carried. The board over the line reads DAYS WITHOUT AN INJURY: 1, which for this company is a fair average.
+
+- **The Whirlwind catalog shot** — a 1981 living room, a smiling model, a refrigerator-sized battery pack on her back, and a cord running down to the vacuum. It goes in The Cordless Detour immediately after the product block, so the claim and the photograph of the claim arrive in that order. The caption points at the cord rather than the pack: the pack is the visible joke, but the cord is the one that retires the word "cordless."
+
 ### Changed
 
-- **The Christmas party photograph is reshot.** Same four people, same room, but the storefront beside VogelTronics now legibly reads **JOANN FABRICS** — which is worth a clause in the caption, because it quietly relocates the company from a campus to a suburban strip mall, a few doors down from a fabric store. Source: `assets/christmasparty-joann-fabrics.png`.
+- **The Christmas party photograph is reshot.** Same four people, same room, but the storefront beside VogelTronics now legibly reads **JO-ANN FABRICS** — which is worth a clause in the caption, because it quietly relocates the company from a campus to a suburban strip mall, a few doors down from a fabric store. Source: `assets/christmasparty-joann-fabrics.png`.
 - **`assets/` keeps every photograph, including the frames the page doesn't use** — the alternate lobby portrait, the contact sheet, and the earlier Christmas frame. `index.html` embeds its own resized copies, so the folder is an archive rather than a dependency and an unused frame costs the site nothing. The README now tables which frame goes where.
-- **The founder banner and The Founding no longer run the same frame.** Both had been using the same late-'70s portrait, one screen apart. The banner now carries a studio portrait of Vogel as a younger man — horn-rims, tweed, narrow tie, cigar — which puts the founder at the founding, directly under a masthead reading 1961–1984 and above an attribution line that starts in 1961. The Founding keeps the later portrait. `.ft-in img` widens from `200px` to `min(300px, 100%)` for the wider frame; the 820px row absorbs it.
+- **The founder banner and The Founding no longer run the same frame, and each now sits in its own era.** Both had been using the same late-'70s portrait, one screen apart. The banner keeps that portrait — the man as the company knew him longest, beside an attribution line reading 1961–1984 — and The Founding takes a studio portrait of Vogel as a younger man: horn-rims, tweed, narrow tie, cigar already established. That section is explicitly 1961, so the young face belongs to it.
+- The Founding's image is set to `min(280px, 100%)` rather than the `.prod` default of `210px`. That default is sized for upright box art; this frame is 5:4, and at 210px it floated at the top of the column instead of holding the block.
 
 ## [2.6.0] - 2026-07-26
 
