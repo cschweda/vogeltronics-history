@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.5] - 2026-07-26
+
+### Added
+
+- **"The Window Table", 1989** — a short coda between The Crash and the Epilogue, and the last photograph in the history. Vogel at his table in Rosarita's, cigar going, looking across the lot at his own boarded store. The company's ending and the man's ending are different things and now get separate beats: The Crash still closes on *"the parade laps you"*, and this follows it.
+- The frame pays off three details planted earlier, which is why it earns a section rather than a slot:
+  - **The marsala is there, but the mushrooms are in their own dish.** Rosarita's had changed hands, and the new kitchen no longer picked them out by hand — "which is not the same thing and he knew it." The old caption's line about the staff liking him was the only evidence anywhere that anyone was fond of him; this is that kindness ending.
+  - **The glass is chianti.** His physician had taken the scotch away.
+  - **Byte and Bogart never opened.** The banner is still hanging four years on, so the view from the table never changed — and he outlived the business that was meant to replace him.
+- The caption names it as unstaged and says who took it: *"the only one here he did not sit for. I took it from two tables away and never told him."* One first-person sentence in an otherwise third-person history, at the very end, from the historian these pages belong to.
+
+### Changed
+
+- **The head-on storefront photograph is dropped.** Its fascia sign sits directly above the boarded door; in the wider view through Rosarita's window the sign stops well to the left of it, with a blank panel between. Two shots of the same building that do not agree, so one carries it — and the window shot contains everything the other did plus Jo-Ann Fabrics lit and trading, the man himself, and his table. `closed.png` stays archived in `assets/` and is listed in the README as an alternate.
+- The Crash returns to ending on its blockquote, unillustrated, which is how it read for the life of the page.
+- The January 1985 caption's claim that a CD shop "moved in next" is gone with it — it would have contradicted a banner still advertising the same shop four years later.
+
 ## [2.7.4] - 2026-07-26
 
 ### Added
