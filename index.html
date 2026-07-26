@@ -161,6 +161,24 @@
   .cardlinks{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-top:10px;font-family:var(--sans);font-size:12.5px}
   .cardlinks a{color:var(--gold);text-decoration:none;border-bottom:1px dotted rgba(230,178,62,.5)}
   .cardlinks a:hover{border-bottom-style:solid}
+
+  /* lightbox — enhancement only; with JS off the images are just images */
+  img.zoomable{cursor:zoom-in}
+  img.zoomable:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+  .lb[hidden]{display:none}
+  .lb{position:fixed;inset:0;margin:0;z-index:100;background:rgba(6,6,8,.94);
+      display:flex;align-items:center;justify-content:center;padding:28px;
+      backdrop-filter:blur(4px)}
+  .lb img{max-width:100%;max-height:calc(100vh - 132px);width:auto;height:auto;
+          border-radius:4px;box-shadow:0 24px 70px rgba(0,0,0,.7)}
+  .lb figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 28px 20px;
+                 font-family:var(--sans);font-size:13px;line-height:1.5;font-style:italic;
+                 color:#b8b1a3;text-align:center;background:linear-gradient(180deg,transparent,#060608 55%)}
+  .lb .x{position:absolute;top:14px;right:16px;width:42px;height:42px;border-radius:50%;
+         background:#17161a;border:1px solid #3a352b;color:#e9e2d3;font-size:22px;line-height:1;
+         cursor:pointer;font-family:var(--sans)}
+  .lb .x:hover{border-color:var(--red);color:#fff}
+  @media(max-width:620px){.lb{padding:12px}.lb img{max-height:calc(100vh - 150px)}}
 </style>
 </head>
 <body>
@@ -488,6 +506,9 @@
       <figcaption>The '83 sales meeting. Walter T. Vogel Jr. demonstrates the Sure-Grip&trade; slot by hanging an entire Colossus from its cartridge, one-handed, to warm applause. The cartridge is <em>Gridiron</em> &mdash; the pack-in, and so the game most machines would spend the rest of their lives stuck on. The plate on the table was meant to read WALTER ("JUNIOR") T. VOGEL; the print shop up the road saw the name, drew its own conclusion, and sent back <span style="letter-spacing:1px">WALTER T. VOGEL &middot; CHAIRMAN</span>. Nobody corrected it. His father is second from left, arms folded, not clapping, beneath a banner reading <span style="letter-spacing:1px">THE ONE YOU CAN COUNT ON</span>. The follow-up question would be asked later, in service departments, by children with screwdrivers.</figcaption>
     </figure>
 
+    <div class="pq">"One of the trades wrote that our pictures always look staged. Of course they're staged &mdash; they're photographs, not snapshots. You do not hire a man with a view camera, and a girl to do the hair, and then ask everybody to act natural."
+      <span class="att">&mdash; Walter T. Vogel, 1983</span></div>
+
     <div class="pq">"People say I handed my boy the Colossus project because he's my son. Sure, that was part of it. His mother asked me at Thanksgiving, in front of everyone, and that is the end of that story. As for Junior's cartridge slot, I'll say this and you can print it: not one child in America ever lost a Colossus cartridge. Not one. Show me the machine that can match that."
       <span class="att">— Walter T. Vogel, 1983</span></div>
 
@@ -500,6 +521,11 @@
     <div class="fall">
       <h2 id="fall">The Crash<span class="yr" style="color:#8a8a8a">1983–1984 · Lapped by the parade</span></h2>
       <p>The end came fast. The <strong>1983 video-game crash</strong> gutted the entire electronic-toy market, and a flood of cheap LCD imports finished what the crash began. VogelTronics — over-extended across a dozen fads, still paying off the Handicapper settlement, its flagship chess line re-boxed and rattled — had no cushion. In 1984 it sold its tooling and assets and switched off the lights in Elk Grove Village. VogelVox's schematics, per legend, were lost in the warehouse move. Walter lived five more years, and never bought a home computer.</p>
+      <figure class="photo">
+        <img src="assets/img/photo-storefront-closed.webp" alt="A black-and-white photograph of a boarded-up storefront in a strip mall. The VogelTronics sign is still mounted above it. A STORE CLOSED notice is taped to the plywood door, and a banner beside it reads COMING SOON, BYTE and BOGART, CDs, tapes, headshop" width="1000" height="800" loading="lazy" decoding="async">
+        <figcaption>Elk Grove Village, 14 January 1985 &mdash; the same storefront the Christmas party looked out on, boarded and already let. Nobody had taken the sign down. What moved in next sold CDs, tapes and paraphernalia: another business betting on a format, in the same unit, in the same strip mall. Nobody arranged this one. By January there was nothing left to arrange.</figcaption>
+      </figure>
+
       <blockquote class="final">"We were always a half-step behind the parade. Turns out if you stay behind long enough, the parade laps you."
         <span class="att">— Walter T. Vogel, 1983</span></blockquote>
     </div>
@@ -577,6 +603,11 @@
   </footer>
 
 </main>
+<figure class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged photograph">
+  <button class="x" id="lbx" type="button" aria-label="Close">&times;</button>
+  <img id="lbi" alt="">
+  <figcaption id="lbc"></figcaption>
+</figure>
 <script>
 (function(){
   var SND = {
@@ -612,6 +643,61 @@
     var master = document.getElementById(arts[j].getAttribute("data-art"));
     if (master) { arts[j].src = master.src; }
   }
+
+  // Click any content image to see it at full size. Progressive enhancement:
+  // the markup is plain <img>, and everything below only happens if this
+  // script runs. The -full variant is a separate file the build emits, so it
+  // is fetched on click and never on load.
+  var lb = document.getElementById("lb"),
+      lbi = document.getElementById("lbi"),
+      lbc = document.getElementById("lbc"),
+      lbx = document.getElementById("lbx"),
+      last = null;
+
+  function fullSrc(src) { return src.replace(/\.webp$/, "-full.webp"); }
+
+  function open(img) {
+    last = img;
+    lbi.src = fullSrc(img.currentSrc || img.src);
+    lbi.alt = img.alt;
+    var fc = img.closest("figure") && img.closest("figure").querySelector("figcaption");
+    lbc.textContent = fc ? fc.textContent : img.alt;
+    lb.hidden = false;
+    document.body.style.overflow = "hidden";
+    lbx.focus();
+  }
+  function close() {
+    lb.hidden = true;
+    lbi.removeAttribute("src");
+    document.body.style.overflow = "";
+    if (last) { last.focus(); last = null; }
+  }
+
+  // the masthead lockup and the little evolution strip are chrome, not content
+  var zoomable = document.querySelectorAll(
+    "main .body img, main .founder-top img, main .gamegrid img");
+  for (var k = 0; k < zoomable.length; k++) {
+    (function (img) {
+      if (img.closest(".evo")) { return; }
+      img.className = img.className ? img.className + " zoomable" : "zoomable";
+      img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", "Enlarge: " + img.alt);
+      img.addEventListener("click", function () { open(img); });
+      img.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(img); }
+      });
+    })(zoomable[k]);
+  }
+
+  lbx.addEventListener("click", close);
+  lb.addEventListener("click", function (e) { if (e.target !== lbi) { close(); } });
+  document.addEventListener("keydown", function (e) {
+    if (lb.hidden) { return; }
+    if (e.key === "Escape") { close(); }
+    // only one focusable thing in the dialog, so keep Tab on it
+    if (e.key === "Tab") { e.preventDefault(); lbx.focus(); }
+  });
 })();
 </script>
 </body>

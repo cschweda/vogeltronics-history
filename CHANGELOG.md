@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.4] - 2026-07-26
+
+### Added
+
+- **Every photograph, box art and portrait is clickable and opens full size**, with its caption underneath. Progressive enhancement throughout: the markup stays plain `<img>`, and the click handling, `tabindex`, `role="button"`, `aria-label`, Enter/Space activation, Escape to close, scroll lock and focus restore are all attached by script at runtime. With JavaScript off they are ordinary images.
+- **A `-full` variant per image**, at the source's natural size and higher quality, emitted by the build. 2.3 MB across the set and fetched **only on click** — nothing on load changes.
+- **The photo sources are regenerated at full resolution.** They had been downsized to 1000 px during the original extraction from the data URIs, so a lightbox would have shown less than the originals held. They are now the true ~1400 px originals, which is what makes "full size" mean anything.
+- **Vogel on the staging.** A real criticism of this site is that the photographs look staged. They do, and it is the point, so he answers it himself — placed directly under the '83 sales meeting, the last staged photograph in the history: *"Of course they're staged — they're photographs, not snapshots. You do not hire a man with a view camera, and a girl to do the hair, and then ask everybody to act natural."*
+- That sets up the closing caption, one section later, on the boarded storefront: an exact date, **14 January 1985**, and *"Nobody arranged this one. By January there was nothing left to arrange."* The complaint becomes the character's position, and the one photograph nobody set up is the one where the company is gone.
+
+### Fixed
+
+- `.lb` is a `<figure>`, so the page's `figure{margin:22px 0}` was offsetting a `position:fixed` overlay 22 px down its own viewport. Reset to `margin:0`.
+- The storefront sign read "There One You Can Count On"; the image was replaced with one reading **"The One You Can Count On"**, matching the banner in the '83 sales-meeting photograph.
+
+## [2.7.3] - 2026-07-26
+
+### Added
+
+- **The boarded storefront** — the eleventh photograph, and the last. It goes inside The Crash between "switched off the lights in Elk Grove Village" and the closing quote, so the reader gets the sentence, then the building, then *"if you stay behind long enough, the parade laps you."*
+- It is the same unit the Christmas party looked out on through the banquet-room glass, which is what makes it land: the reader has already stood in that parking lot in 1977 with a drink in their hand. The sign is still mounted. The caption's load-bearing line is "Nobody had taken the sign down."
+- The banner for what replaced them — **BYTE and BOGART · CDs · TAPES · HEADSHOP** — is the joke underneath the joke. Another business betting on a format, in the same unit, in the same strip mall, in the year the CD arrived. The caption says that plainly rather than winking at it.
+
 ## [2.7.2] - 2026-07-26
 
 ### Added

@@ -57,7 +57,13 @@ const WIDTHS = {
 const widthFor = (name) =>
   WIDTHS[name] ?? (name.startsWith("photo-") ? WIDTHS.__photo : WIDTHS.__box);
 
-/** Build a single source file. Returns {name, width, height, before, after}. */
+/**
+ * Build a single source file: the display image, plus a -full variant.
+ *
+ * The display image is sized to its CSS slot. The -full one is the source at
+ * its natural size and higher quality, for the lightbox — fetched only when
+ * somebody actually clicks a photograph, so it costs nothing on load.
+ */
 export async function buildOne(file, out = OUT) {
   const { name } = parse(file);
   const from = join(SRC, file);
@@ -65,7 +71,14 @@ export async function buildOne(file, out = OUT) {
     .resize({ width: widthFor(name), withoutEnlargement: true })
     .webp({ quality: 82, effort: 6 })
     .toFile(join(out, `${name}.webp`));
-  return { name, ...info, before: (await stat(from)).size, after: info.size };
+  const full = await sharp(from)
+    .webp({ quality: 86, effort: 6 })
+    .toFile(join(out, `${name}-full.webp`));
+  return {
+    name, ...info,
+    before: (await stat(from)).size, after: info.size,
+    full: full.size, fullW: full.width, fullH: full.height,
+  };
 }
 
 export const isImage = (f) => /\.(png|jpe?g)$/i.test(f);
@@ -80,6 +93,7 @@ export async function buildAll({ quiet = false, out = OUT } = {}) {
 
   const inB = rows.reduce((a, r) => a + r.before, 0);
   const outB = rows.reduce((a, r) => a + r.after, 0);
+  const fullB = rows.reduce((a, r) => a + r.full, 0);
   const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
 
   if (!quiet) {
@@ -87,14 +101,16 @@ export async function buildAll({ quiet = false, out = OUT } = {}) {
       console.log(
         `  ${(r.name + ".webp").padEnd(32)} ${`${r.width}x${r.height}`.padEnd(10)}` +
           ` ${kb(r.before).padStart(8)} -> ${kb(r.after).padStart(8)}` +
-          `  -${Math.round((1 - r.after / r.before) * 100)}%`
+          `  -${Math.round((1 - r.after / r.before) * 100)}%` +
+          `   full ${`${r.fullW}x${r.fullH}`.padEnd(10)} ${kb(r.full).padStart(8)}`
       );
     }
     console.log("");
   }
   console.log(
-    `  ${rows.length} images  ${kb(inB)} -> ${kb(outB)}  ` +
-      `(-${Math.round((1 - outB / inB) * 100)}%)`
+    `  ${rows.length} images  ${kb(inB)} -> ${kb(outB)} on load ` +
+      `(-${Math.round((1 - outB / inB) * 100)}%), ${kb(fullB)} of full-size ` +
+      `variants fetched only on click`
   );
   return rows;
 }
