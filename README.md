@@ -52,13 +52,14 @@ The photographs are kept in full — including the frames the page does not curr
 | `whirlwind-vogel.png` | The Cordless Detour, 1981 |
 | `wtv.png` | WTV, 1981 — the studio that was never built |
 | `ozerov_vogel.png` | The Grandmaster Affair — Ozerov vs. Fischer, date unknown |
-| `colossus.png` | The Colossus — the '83 sales meeting |
+| `colossus-holding-cartridge.png` | The Colossus — the '83 sales meeting |
 | `vogel_at_his_desk.png` | The Next Ten Years, 1982 — and this README, via the web-sized `vogel-at-his-desk-web.jpg` |
 | `vogelheadshot-logo.png` | Alternate — the same portrait with the lobby sign behind him |
 | `vogeldouble-shot.png` | Alternate — contact sheet pairing the lobby and desk frames |
 | `christmasparty.png` | Alternate — the earlier Christmas frame, before the neighbouring storefront read Jo-Ann Fabrics |
 | `ozerov.png` | Alternate — the same match without Walter T. Vogel standing behind it |
 | `whirlwind.png` | Alternate — the same living room without Walter T. Vogel in the chair |
+| `colossus.png` | Alternate — the same moment held two-handed, before the cartridge took the weight |
 
 `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
