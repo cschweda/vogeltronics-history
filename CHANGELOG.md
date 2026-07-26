@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.6] - 2026-07-26
+
+### Added
+
+- **A byline: "by Christopher Schweda"**, under the masthead. The page had authorship in `<meta>` and JSON-LD but nothing a reader could see, and a history wants a historian — particularly this one, which now ends with that historian admitting in the first person that he took the last photograph.
+- **The Fargo card.** *"This is a true story. The events described here took place in Elk Grove Village, Illinois, between 1961 and 1984. At the request of no one, the names have been left exactly as they were. Out of respect for the dead, the rest has been told exactly as it occurred."*
+- Reading order is deliberate and the honest note is **not** weakened: the card, then the lead paragraph, then the existing italic line saying every product, person and disaster below is made up. The lie is louder and comes first; the admission is quieter and comes third. Fargo never takes its card back, and this one does — one paragraph later, in small italics, which is the joke and the disclosure at the same time. The footer disclaimer, `genre: "Fiction"` in the JSON-LD and `llms.txt` are all untouched, so nothing a machine reads has changed.
+
 ## [2.7.5] - 2026-07-26
 
 ### Added
