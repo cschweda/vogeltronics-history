@@ -13,3 +13,6 @@ node_modules/
 # Python (tools/)
 __pycache__/
 *.pyc
+
+# Build output — `npm run build` regenerates assets/img/ from assets/img-src/
+assets/img/

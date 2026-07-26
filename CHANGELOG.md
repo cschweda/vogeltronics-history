@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-07-26
+
+### Changed
+
+- **Images are no longer embedded in `index.html`, and the document is 70 KB instead of 4.4 MB.** Inlining everything as data URIs had one fatal property: nothing paints until the entire document arrives. First paint and largest contentful paint both sat at **16.7 s** on a throttled mobile connection, and mobile performance scored **55**. Extracted, the browser fetches images in parallel, defers everything below the fold, and caches them between visits.
+- **There is now a build step**, which the project had gone out of its way to avoid. It earns its keep:
+  - `assets/img-src/` holds the committed originals. `npm run build` runs `tools/build-images.mjs` (sharp), which writes right-sized WebP to `assets/img/`. That directory is gitignored and regenerated on every Netlify deploy; `netlify.toml` carries the command and pins Node 22.
+  - **Format**: WebP beats the JPEG photographs, and beats the flat-colour box art badly — PNG is the wrong container for that artwork at this size. No `<picture>` fallback: WebP has shipped in every browser since Safari 14 in 2020, and 31 elements of fallback markup to serve a rounding error of traffic is a bad trade.
+  - **Size**: every image was being sent far larger than it is ever drawn — the box art arrived 600 px wide to be displayed at 210. Each target is now its CSS display width doubled, so a file is right for a 2× screen and no bigger. Where an image appears twice at two sizes, the larger wins.
+  - Together: **2.9 MB → 885 KB, down 69%.** `box-meadow` alone went 194 KB → 21 KB.
+- **28 of 31 images are `loading="lazy"` with `decoding="async"`.** The three that stay eager are the masthead lockup and the founder portrait, which are in the first viewport on a phone, plus its duplicate; both are preloaded with `fetchpriority="high"`.
+- The three Rovacon voice clips were also data URIs. They are byte-identical to WAVs already sitting in `assets/`, so they now point at those files instead of shipping twice.
+
+### Result
+
+Mobile performance **55 → 90** measured locally, LCP **16.7 s → 3.7 s**, with accessibility, best practices and SEO holding at 100. Desktop stays 100 across all four.
+
 ## [2.6.2] - 2026-07-26
 
 ### Fixed

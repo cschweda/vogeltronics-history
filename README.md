@@ -38,28 +38,17 @@ The page covers, era by era:
 
 ## Tech
 
-There is no build step and there are no dependencies. The entire site — markup, styles, all 26 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~4.4 MB). The box art and logos are PNG; the ten photographs are JPEG, resized to 1000 px wide — 700 for The Founding's portrait, 480 for the founder banner — so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the source WAVs for the embedded Rovacon clips, and the full-resolution photograph sources.
+The page is hand-written HTML with inline CSS — no framework, no bundler, no client-side rendering. `index.html` is **70 KB**.
 
-The photographs are kept in full — including the frames the page does not currently use. `index.html` embeds its own resized copies, so `assets/` is an archive rather than a dependency, and an unused frame costs the site nothing:
+There is one build step, and it exists for one reason: images. They used to be base64 data URIs inside `index.html`, which made the document 4.4 MB and meant nothing painted until all of it arrived — first paint and largest contentful paint both landed at **16.7 s** on a throttled mobile connection. Now:
 
-| File | Where it appears |
-| --- | --- |
-| `vogelheadshot-nologo.png` | Founder banner — "A Word From Our Founder" |
-| `youngvogel.png` | The Founding, 1961 |
-| `pinewoodderby.png` | Derby, 1974 |
-| `christmasparty-joann-fabrics.png` | The Electronic Reinvention, 1977 |
-| `oracle_assembly_line.png` | Electrify Everything — the Oracle, 1980 |
-| `whirlwind-vogel.png` | The Cordless Detour, 1981 |
-| `wtv.png` | WTV, 1981 — the studio that was never built |
-| `ozerov_vogel.png` | The Grandmaster Affair — Ozerov vs. Fischer, date unknown |
-| `colossus-holding-cartridge.png` | The Colossus — the '83 sales meeting |
-| `vogel_at_his_desk.png` | The Next Ten Years, 1982 — and this README, via the web-sized `vogel-at-his-desk-web.jpg` |
-| `vogelheadshot-logo.png` | Alternate — the same portrait with the lobby sign behind him |
-| `vogeldouble-shot.png` | Alternate — contact sheet pairing the lobby and desk frames |
-| `christmasparty.png` | Alternate — the earlier Christmas frame, before the neighbouring storefront read Jo-Ann Fabrics |
-| `ozerov.png` | Alternate — the same match without Walter T. Vogel standing behind it |
-| `whirlwind.png` | Alternate — the same living room without Walter T. Vogel in the chair |
-| `colossus.png` | Alternate — the same moment held two-handed, before the cartridge took the weight |
+- `assets/img-src/` holds the committed originals — PNG box art and logos, JPEG photographs.
+- `npm run build` runs `tools/build-images.mjs`, which uses [sharp](https://sharp.pixelplumbing.com/) to write right-sized WebP into `assets/img/`.
+- `assets/img/` is gitignored. Netlify regenerates it on every deploy.
+
+Two things happen in that pass. **Format:** WebP beats the JPEG photographs and, by a wide margin, the flat-colour box art, which is the wrong kind of image for PNG at this size. There is no `<picture>` fallback — WebP has shipped in every browser since Safari 14 in 2020, and 31 elements of fallback markup is a bad trade. **Size:** every image was being sent far larger than it is ever displayed; the box art arrived 600 px wide to be drawn at 210. Each target is its CSS display width doubled, so a file is right for a 2× screen and no bigger. Together that is **2.9 MB → 885 KB, a 69% cut.**
+
+The three Rovacon voice clips and six Larry clips are ordinary `.wav` files in `assets/`, fetched on demand when you press a sound button. Nothing else is loaded at runtime.
 
 `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 

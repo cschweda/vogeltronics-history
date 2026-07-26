@@ -1,0 +1,14 @@
+{
+  "name": "vogeltronics-history",
+  "version": "2.7.0",
+  "private": true,
+  "description": "A single-page corporate history of VogelTronics, a fictional American toy company (1961-1984).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build-images.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.35.3"
+  }
+}

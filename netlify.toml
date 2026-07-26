@@ -1,6 +1,17 @@
-# vogeltronics.com — static single-file site, no build step
+# vogeltronics.com — static site, publish the repo root as-is.
+#
+# The build step exists for one reason: images. Every image used to be a base64
+# data URI inside index.html, which made the document 4.4 MB and meant nothing
+# painted until all of it arrived — FCP and LCP both landed at 16.7 s on a
+# throttled mobile connection. The originals now live in assets/img-src/, and
+# `npm run build` (tools/build-images.mjs, via sharp) writes right-sized WebP
+# into assets/img/, which is gitignored and regenerated on every deploy.
 [build]
+  command = "npm run build"
   publish = "."
+
+[build.environment]
+  NODE_VERSION = "22"
 
 # Canonicalise on the bare domain.
 #
@@ -31,7 +42,7 @@
 # the certificate.
 
 # The six Larry voice clips are the only files the page actually fetches at
-# runtime — every image is a data URI inside index.html. They were being served
+# runtime besides the images themselves. They were being served
 # with no Cache-Control at all, so a repeat visitor re-downloaded 232 KiB of
 # WAV to hear the same six lines. They are immutable in practice: a clip is
 # re-cut under a new name, never edited in place.
@@ -43,3 +54,13 @@
   for = "/assets/*.wav"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# assets/img/ is build output: tools/build-images.mjs writes it from
+# assets/img-src/ under stable filenames. Because a regenerated image keeps its
+# name these are deliberately NOT immutable — a week is long enough to help a
+# repeat visitor and short enough that a replaced photograph corrects itself
+# without anyone having to think about cache busting.
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
