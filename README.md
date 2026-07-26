@@ -38,7 +38,22 @@ The page covers, era by era:
 
 ## Tech
 
-There is no build step and there are no dependencies. The entire site — markup, styles, all 21 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~3 MB). The box art and logos are PNG; the four photographs are JPEG, resized to 1000 px wide (480 px for the portrait) so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the full-resolution photograph sources (`vogelheadshot-*.png`, `pinewoodderby.png`, `vogel_at_his_desk.png`, `christmasparty.png`) plus the web-sized copy this README displays (`vogel-at-his-desk-web.jpg`), and the source WAVs for the embedded Rovacon clips. `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
+There is no build step and there are no dependencies. The entire site — markup, styles, all 21 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~3 MB). The box art and logos are PNG; the five photographs are JPEG, resized to 1000 px wide — 700 for the founder banner, 480 for the portrait — so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the source WAVs for the embedded Rovacon clips, and the full-resolution photograph sources.
+
+The photographs are kept in full — including the frames the page does not currently use. `index.html` embeds its own resized copies, so `assets/` is an archive rather than a dependency, and an unused frame costs the site nothing:
+
+| File | Where it appears |
+| --- | --- |
+| `youngvogel.png` | Founder banner — "A Word From Our Founder" |
+| `vogelheadshot-nologo.png` | The Founding, 1961 |
+| `pinewoodderby.png` | Derby, 1974 |
+| `christmasparty-joann-fabrics.png` | The Electronic Reinvention, 1977 |
+| `vogel_at_his_desk.png` | The Next Ten Years, 1982 — and this README, via the web-sized `vogel-at-his-desk-web.jpg` |
+| `vogelheadshot-logo.png` | Alternate — the same portrait with the lobby sign behind him |
+| `vogeldouble-shot.png` | Alternate — contact sheet pairing the lobby and desk frames |
+| `christmasparty.png` | Alternate — the earlier Christmas frame, before the neighbouring storefront read JoAnn Fabrics |
+
+`tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
 `tools/make-og-image.py` regenerates the social card (`assets/og-image.png`). **This repo is its canonical home** — it is the one generator every VogelTronics property uses, so the whole catalog's cards match. Game repos do not keep a copy; they run it from a sibling checkout and commit only the resulting PNG. For this site:
 

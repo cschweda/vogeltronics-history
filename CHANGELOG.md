@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] - 2026-07-26
+
+### Changed
+
+- **The Christmas party photograph is reshot.** Same four people, same room, but the storefront beside VogelTronics now legibly reads **JOANN FABRICS** — which is worth a clause in the caption, because it quietly relocates the company from a campus to a suburban strip mall, a few doors down from a fabric store. Source: `assets/christmasparty-joann-fabrics.png`.
+- **`assets/` keeps every photograph, including the frames the page doesn't use** — the alternate lobby portrait, the contact sheet, and the earlier Christmas frame. `index.html` embeds its own resized copies, so the folder is an archive rather than a dependency and an unused frame costs the site nothing. The README now tables which frame goes where.
+- **The founder banner and The Founding no longer run the same frame.** Both had been using the same late-'70s portrait, one screen apart. The banner now carries a studio portrait of Vogel as a younger man — horn-rims, tweed, narrow tie, cigar — which puts the founder at the founding, directly under a masthead reading 1961–1984 and above an attribution line that starts in 1961. The Founding keeps the later portrait. `.ft-in img` widens from `200px` to `min(300px, 100%)` for the wider frame; the 820px row absorbs it.
+
 ## [2.6.0] - 2026-07-26
 
 ### Added
