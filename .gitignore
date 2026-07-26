@@ -9,3 +9,7 @@
 
 # Node (future tooling)
 node_modules/
+
+# Python (tools/)
+__pycache__/
+*.pyc

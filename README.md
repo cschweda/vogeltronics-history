@@ -38,7 +38,7 @@ The page covers, era by era:
 
 ## Tech
 
-There is no build step and there are no dependencies. The entire site — markup, styles, all 23 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~3.8 MB). The box art and logos are PNG; the seven photographs are JPEG, resized to 1000 px wide — 700 for The Founding's portrait, 480 for the founder banner — so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the source WAVs for the embedded Rovacon clips, and the full-resolution photograph sources.
+There is no build step and there are no dependencies. The entire site — markup, styles, all 24 images, and the three Rovacon voice clips (all embedded as data URIs) — is one self-contained `index.html` (~4 MB). The box art and logos are PNG; the eight photographs are JPEG, resized to 1000 px wide — 700 for The Founding's portrait, 480 for the founder banner — so the page stays a reasonable download. The `assets/` folder holds the README logo artwork (`vogeltronics-logo.svg` and its PNG render), drawn as pure vector paths so it needs no fonts, the SVG source for the 1961 Vogel Novelty badge (`vogel-novelty-badge.svg`), the source WAVs for the embedded Rovacon clips, and the full-resolution photograph sources.
 
 The photographs are kept in full — including the frames the page does not currently use. `index.html` embeds its own resized copies, so `assets/` is an archive rather than a dependency, and an unused frame costs the site nothing:
 
@@ -49,11 +49,14 @@ The photographs are kept in full — including the frames the page does not curr
 | `pinewoodderby.png` | Derby, 1974 |
 | `christmasparty-joann-fabrics.png` | The Electronic Reinvention, 1977 |
 | `oracle_assembly_line.png` | Electrify Everything — the Oracle, 1980 |
-| `whirlwind.png` | The Cordless Detour, 1981 |
+| `whirlwind-vogel.png` | The Cordless Detour, 1981 |
+| `ozerov_vogel.png` | The Grandmaster Affair — Ozerov vs. Fischer, date unknown |
 | `vogel_at_his_desk.png` | The Next Ten Years, 1982 — and this README, via the web-sized `vogel-at-his-desk-web.jpg` |
 | `vogelheadshot-logo.png` | Alternate — the same portrait with the lobby sign behind him |
 | `vogeldouble-shot.png` | Alternate — contact sheet pairing the lobby and desk frames |
 | `christmasparty.png` | Alternate — the earlier Christmas frame, before the neighbouring storefront read Jo-Ann Fabrics |
+| `ozerov.png` | Alternate — the same match without Walter T. Vogel standing behind it |
+| `whirlwind.png` | Alternate — the same living room without Walter T. Vogel in the chair |
 
 `tools/gen_badge.py` regenerates the badge SVG and re-embeds its PNG into `index.html` (needs `rsvg-convert` and the DejaVu Sans font); it is never required to view or deploy the site.
 
