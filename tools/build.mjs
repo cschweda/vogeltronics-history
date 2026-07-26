@@ -34,8 +34,9 @@ const COPY = [
   ["assets/og-image.png", "assets/og-image.png"],
 ];
 
-const ROBOTS = `# vogeltronics.com — one page, and it is all meant to be read.
-User-agent: *
+// Plain ASCII, no comment line. Lighthouse's robots.txt audit is stricter than
+// the spec and rejected an em dash in a leading comment.
+const ROBOTS = `User-agent: *
 Allow: /
 
 Sitemap: ${SITE}/sitemap.xml
