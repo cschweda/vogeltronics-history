@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.8] - 2026-07-26
+
+### Fixed
+
+- **A frame break the first sweep missed.** The Rovacon section carried a parenthetical reading *"In our timeline, formant voice chips arrived around 1980; VogelTronics' lore cheerfully claims a year's head start."* Two concessions in one sentence — *our timeline* and *lore* — and the earlier scan never caught them because the term list was built from words like *fiction* and *parody*. The same fact is now told from inside: formant chips did not reach the wider market until 1980, VogelTronics had a year on everybody, and the catalog never let a buyer forget it. Re-scanned against a wider list (*our timeline, lore, alternate, in reality, never existed*): zero.
+- **An unreadable sentence in WTV.** *"…the margin of every memo he ever declined WTV for thirty-five years"* — `WTV` is the thing he initialled, but sitting flush against "declined" it parses as a verb phrase and stops the reader dead. Now set off as `— WTV, WTV, WTV —`, which reads correctly and, repeated three times, does the work the sentence was after: thirty-five years of the same three letters.
+- **"The homages, reborn in your browser" → "The catalog, reborn in your browser."** In frame these are reproductions of VogelTronics toys, not homages to somebody else's; the old subtitle quietly admitted there was an original elsewhere.
+
 ## [2.7.7] - 2026-07-26
 
 ### Changed
