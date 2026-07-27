@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.8] - 2026-07-26
 
+### Added
+
+- **A source link on the Gridiron card** — `github.com/cschweda/vogeltronics-gridiron-i` — matching the pattern Rovacon and Larry already use. It was the only playable game with no way through to its code. Note the repo is `vogeltronics-gridiron-i`, not `vogeltronics-gridiron`, which 404s.
+- All seven outbound links on the page were checked and resolve.
+
 ### Fixed
 
 - **A frame break the first sweep missed.** The Rovacon section carried a parenthetical reading *"In our timeline, formant voice chips arrived around 1980; VogelTronics' lore cheerfully claims a year's head start."* Two concessions in one sentence — *our timeline* and *lore* — and the earlier scan never caught them because the term list was built from words like *fiction* and *parody*. The same fact is now told from inside: formant chips did not reach the wider market until 1980, VogelTronics had a year on everybody, and the catalog never let a buyer forget it. Re-scanned against a wider list (*our timeline, lore, alternate, in reality, never existed*): zero.
