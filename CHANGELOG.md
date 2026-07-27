@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.9] - 2026-07-27
+
+### Removed
+
+- **The byline.** *"by Christopher Schweda"* is out from under the masthead, along with the one CSS rule that existed to style it. 2.7.6 argued a history wants a historian; the author's answer is that this one wants an unnamed one — for now, the only evidence of the narrator is the caption under the last photograph, the "I" two tables away who never told him. Nothing a machine reads has changed: `<meta name="author">`, the JSON-LD `author` and `publisher`, and `llms.txt` still carry the name, and the builder credits in the Epilogue and the games grid stand.
+
 ## [2.7.8] - 2026-07-26
 
 ### Added
