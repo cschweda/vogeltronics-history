@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.10] - 2026-07-27
+
+### Changed
+
+- **The mushroom situation at Rosarita's, rewritten from melancholy to comedy.** The old version had the new kitchen serving the mushrooms on the side, *"which is not the same thing and he knew it."* Now the new owners have stopped picking them out entirely: Walter T. Vogel picks his own mushrooms out of his own marsala, one at a time, onto the extra plate that still arrives unasked — proof they know exactly what he is about to do, and have simply stopped regarding it as kitchen work. He gets *"the plate the new owners were kind enough to bring, and no kinder."* The caption now offers the photograph as evidence — *(see mushroom plate, right)* — and the alt text mentions the plate, so the pointer works for readers who cannot see the picture. The Christmas-party caption, where the old staff picked them out because they liked him, is untouched; it is the setup.
+
+### Removed
+
+- **"who also wrote this history."** The Epilogue's builder credit now credits the builder and stops. With the byline gone in 2.7.9, this clause was the last place the visible text named the writer; the narrator is down to the "I" in the last caption.
+
 ## [2.7.9] - 2026-07-27
 
 ### Removed
