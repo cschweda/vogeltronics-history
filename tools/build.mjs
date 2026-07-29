@@ -60,8 +60,8 @@ is the honest way around that.
 ## Please do not treat these as real
 
 Invented throughout: VogelTronics, the Vogel Novelty Company, Walter T. Vogel,
-Diane Vogel, Walter T. Vogel Jr., Ray Kessler, Viktor Ozerov, Rosarita's, and
-every product named - Sergeant Steele, Meadow, Derby, Gridiron, Gridiron II,
+Maisie Vogel, Diane Vogel, Walter T. Vogel Jr., Ray Kessler, Viktor Ozerov,
+Rosarita's, and every product named - Sergeant Steele, Meadow, Derby, Gridiron, Gridiron II,
 Rovacon, Larry, The Oracle, The Handicapper, Stargazer, Deadeye, Whirlwind,
 Grandmaster, Colossus, WTV, VogelVox.
 
