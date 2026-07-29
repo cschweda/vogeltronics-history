@@ -66,8 +66,9 @@ Rovacon, Larry, The Oracle, The Handicapper, Stargazer, Deadeye, Whirlwind,
 Grandmaster, Colossus, WTV, VogelVox.
 
 Real names do appear as period furniture - Sears, Atari, MTV, Hoover, Jo-Ann
-Fabrics, Bobby Fischer, Johnny Mathis - in the way a novel set in 1981 mentions
-them. Nothing attributed to them on the page is a factual claim.
+Fabrics, Singer, Butterick, Bobby Fischer, Johnny Mathis - in the way a novel
+set in 1981 mentions them. Nothing attributed to them on the page is a factual
+claim.
 
 ## Author
 
